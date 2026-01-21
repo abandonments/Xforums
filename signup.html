@@ -2,88 +2,512 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>DF | Sign Up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | xBOARD</title>
     <style>
-      body { font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #05070a; margin: 0; }
-      .signup-container { background: #12161d; padding: 2.5rem; border-radius: 12px; border: 1px solid #afe7fa; width: 340px; text-align: center; }
-      h2 { color: #afe7fa; text-transform: uppercase; letter-spacing: 2px; }
-      input { width: 100%; padding: 12px; margin: 10px 0; background: #1e2530; border: 1px solid #1e2530; border-radius: 6px; color: white; box-sizing: border-box; outline: none; }
-      input:focus { border-color: #afe7fa; }
-      .btn { width: 100%; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: 0.3s; }
-      .btn-primary { background: #afe7fa; color: #05070a; }
-      .btn-mullvad { background: transparent; border: 1px solid #afe7fa; color: #afe7fa; margin-top: 20px; }
-      .btn:hover { opacity: 0.8; box-shadow: 0 0 10px #afe7fa; }
-      .divider { margin: 20px 0; color: #6d7c90; font-size: 0.8rem; text-transform: uppercase; }
-      .back-link { display: block; margin-top: 20px; font-size: 0.85rem; color: #6d7c90; text-decoration: none; }
+        :root {
+            --bg: #05070a;
+            --panel: #12161d;
+            --border: #1e2530;
+            --accent: #afe7fa;
+            --error: #ff4757;
+            --success: #2ed573;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            background: var(--bg);
+            padding: 20px;
+        }
+        
+        .signup-container { 
+            background: var(--panel); 
+            padding: 40px; 
+            border-radius: 12px; 
+            border: 1px solid var(--accent); 
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+        
+        h2 { 
+            color: var(--accent); 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #6d7c90;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input { 
+            width: 100%; 
+            padding: 12px; 
+            background: var(--bg); 
+            border: 1px solid var(--border); 
+            border-radius: 6px; 
+            color: white; 
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        
+        .form-group input:focus { 
+            outline: none; 
+            border-color: var(--accent); 
+        }
+        
+        .form-group.has-error input {
+            border-color: var(--error);
+        }
+        
+        .error-message {
+            color: var(--error);
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .form-group.has-error .error-message {
+            display: block;
+        }
+        
+        .alert {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .alert.show {
+            display: block;
+        }
+        
+        .alert-error {
+            background: rgba(255, 71, 87, 0.1);
+            border: 1px solid var(--error);
+            color: var(--error);
+        }
+        
+        .alert-success {
+            background: rgba(46, 213, 115, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+        
+        .btn { 
+            width: 100%; 
+            padding: 14px; 
+            border: none; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        
+        .btn:hover:not(:disabled) { 
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-primary { 
+            background: var(--accent); 
+            color: var(--bg); 
+        }
+        
+        .btn-secondary { 
+            background: transparent; 
+            border: 1px solid var(--accent); 
+            color: var(--accent);
+            margin-top: 15px;
+        }
+        
+        .divider { 
+            margin: 25px 0; 
+            color: #6d7c90; 
+            font-size: 0.85rem; 
+            text-transform: uppercase;
+            text-align: center;
+            position: relative;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background: var(--border);
+        }
+        
+        .divider::before {
+            left: 0;
+        }
+        
+        .divider::after {
+            right: 0;
+        }
+        
+        .links {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .links a { 
+            color: var(--accent); 
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: opacity 0.2s;
+        }
+        
+        .links a:hover {
+            opacity: 0.8;
+        }
+        
+        .info-text {
+            font-size: 0.85rem;
+            color: #6d7c90;
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+        
+        /* Modal for Account ID */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: var(--panel);
+            padding: 30px;
+            border-radius: 12px;
+            border: 2px solid var(--accent);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+        
+        .modal-content h3 {
+            color: var(--success);
+            margin-bottom: 20px;
+        }
+        
+        .account-id {
+            background: var(--bg);
+            padding: 20px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin: 20px 0;
+            letter-spacing: 2px;
+            user-select: all;
+        }
+        
+        .warning {
+            color: var(--error);
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        
+        @media (max-width: 480px) {
+            .signup-container {
+                padding: 30px 20px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="signup-container">
-      <h2>Register</h2>
-      <input type="email" id="email" placeholder="Email Address" />
-      <input type="password" id="password" placeholder="Password" />
-      <button type="button" class="btn btn-primary" id="signupBtn">Sign Up with Email</button>
+        <h2>Register</h2>
+        
+        <div id="alert" class="alert"></div>
+        
+        <form id="emailSignupForm" novalidate>
+            <div class="form-group" id="emailGroup">
+                <label for="email">Email Address</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                    required
+                    aria-required="true"
+                />
+                <div class="error-message">Please enter a valid email address</div>
+            </div>
+            
+            <div class="form-group" id="passwordGroup">
+                <label for="password">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    placeholder="At least 6 characters"
+                    autocomplete="new-password"
+                    required
+                    aria-required="true"
+                />
+                <div class="error-message">Password must be at least 6 characters</div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" id="signupBtn">Create Account</button>
+        </form>
 
-      <div class="divider">OR</div>
-      <button type="button" class="btn btn-mullvad" id="mullvadBtn">Generate Account ID</button>
-      
-      <a href="login.html" class="back-link">Back to Login</a>
+        <div class="divider">OR</div>
+        
+        <button type="button" class="btn btn-secondary" id="anonymousBtn">Generate Anonymous ID</button>
+        <p class="info-text">⚠️ Anonymous accounts provide privacy but you'll need to save your account ID to login later</p>
+        
+        <div class="links">
+            <a href="login.html">Already have an account? Login</a>
+        </div>
+    </div>
+
+    <!-- Account ID Modal -->
+    <div id="accountModal" class="modal" role="dialog" aria-labelledby="modalTitle">
+        <div class="modal-content">
+            <h3 id="modalTitle">✅ Account Created!</h3>
+            <p style="color: #6d7c90; margin-bottom: 10px;">Your Anonymous Account ID:</p>
+            <div class="account-id" id="accountIdDisplay">Loading...</div>
+            <p class="warning">⚠️ IMPORTANT: Write this down!</p>
+            <p style="color: #6d7c90; font-size: 0.9rem; margin: 15px 0;">
+                You'll need this ID to access your account. We cannot recover it if lost.
+            </p>
+            <button class="btn btn-primary" id="continueBtn">Continue to Forums</button>
+        </div>
     </div>
 
     <script type="module">
-      import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-      import { getAuth, createUserWithEmailAndPassword, updateProfile, signInAnonymously } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-      import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, createUserWithEmailAndPassword, updateProfile, signInAnonymously } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getFirestore, doc, setDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-      const firebaseConfig = {
-        apiKey: 'AIzaSyBTZmr8e_Gk9ltVEdVPOhI8Od9bD3tbrdA',
-        authDomain: 'rebornforums.firebaseapp.com',
-        projectId: 'rebornforums',
-        storageBucket: 'rebornforums.firebasestorage.app',
-        messagingSenderId: '499435360097',
-        appId: '1:499435360097:web:c5c1fc54e4c37e784b7f20',
-      };
+        const firebaseConfig = {
+            apiKey: 'AIzaSyBTZmr8e_Gk9ltVEdVPOhI8Od9bD3tbrdA',
+            authDomain: 'rebornforums.firebaseapp.com',
+            projectId: 'rebornforums',
+            storageBucket: 'rebornforums.firebasestorage.app',
+            messagingSenderId: '499435360097',
+            appId: '1:499435360097:web:c5c1fc54e4c37e784b7f20',
+        };
 
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const db = getFirestore(app);
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-      // Email Registration
-      document.getElementById('signupBtn').addEventListener('click', async () => {
-          const email = document.getElementById('email').value;
-          const password = document.getElementById('password').value;
-          if(!email || !password) return alert("Please fill in all fields.");
+        // DOM Elements
+        const emailForm = document.getElementById('emailSignupForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const emailGroup = document.getElementById('emailGroup');
+        const passwordGroup = document.getElementById('passwordGroup');
+        const signupBtn = document.getElementById('signupBtn');
+        const anonymousBtn = document.getElementById('anonymousBtn');
+        const alert = document.getElementById('alert');
+        const modal = document.getElementById('accountModal');
+        const accountIdDisplay = document.getElementById('accountIdDisplay');
+        const continueBtn = document.getElementById('continueBtn');
 
-          try {
-              const cred = await createUserWithEmailAndPassword(auth, email, password);
-              const username = email.split('@')[0];
-              await updateProfile(cred.user, { displayName: username });
-              await setDoc(doc(db, "users", cred.user.uid), {
-                  username: username,
-                  email: email,
-                  role: "User",
-                  method: "email"
-              });
-              window.location.href = "index.html";
-          } catch (err) { alert(err.message); }
-      });
+        // Validation
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
 
-      // Mullvad Registration (Account Number)
-      document.getElementById('mullvadBtn').addEventListener('click', async () => {
-          const accNumber = Array.from({length: 12}, () => Math.floor(Math.random() * 10)).join('');
-          try {
-              const cred = await signInAnonymously(auth);
-              await updateProfile(cred.user, { displayName: accNumber });
-              await setDoc(doc(db, "users", cred.user.uid), {
-                  username: accNumber,
-                  email: "N/A",
-                  role: "User",
-                  method: "mullvad"
-              });
-              alert("YOUR ACCOUNT ID: " + accNumber + "\nWrite this down! You will need it to login.");
-              window.location.href = "index.html";
-          } catch (err) { alert(err.message); }
-      });
+        function validatePassword(password) {
+            return password && password.length >= 6;
+        }
+
+        function showAlert(message, type = 'error') {
+            alert.textContent = message;
+            alert.className = `alert alert-${type} show`;
+        }
+
+        function hideAlert() {
+            alert.classList.remove('show');
+        }
+
+        function sanitizeInput(input) {
+            const div = document.createElement('div');
+            div.textContent = input;
+            return div.innerHTML;
+        }
+
+        // Real-time validation
+        emailInput.addEventListener('input', () => {
+            hideAlert();
+            if (emailInput.value && validateEmail(emailInput.value)) {
+                emailGroup.classList.remove('has-error');
+            }
+        });
+
+        passwordInput.addEventListener('input', () => {
+            hideAlert();
+            if (validatePassword(passwordInput.value)) {
+                passwordGroup.classList.remove('has-error');
+            }
+        });
+
+        // Email Registration
+        emailForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideAlert();
+
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+
+            // Validate
+            let isValid = true;
+
+            if (!validateEmail(email)) {
+                emailGroup.classList.add('has-error');
+                isValid = false;
+            } else {
+                emailGroup.classList.remove('has-error');
+            }
+
+            if (!validatePassword(password)) {
+                passwordGroup.classList.add('has-error');
+                isValid = false;
+            } else {
+                passwordGroup.classList.remove('has-error');
+            }
+
+            if (!isValid) {
+                showAlert('Please fix the errors above');
+                return;
+            }
+
+            // Attempt registration
+            signupBtn.disabled = true;
+            signupBtn.textContent = 'Creating Account...';
+
+            try {
+                const cred = await createUserWithEmailAndPassword(auth, email, password);
+                const username = email.split('@')[0];
+                
+                await updateProfile(cred.user, { displayName: username });
+                await setDoc(doc(db, "users", cred.user.uid), {
+                    username: sanitizeInput(username),
+                    email: sanitizeInput(email),
+                    role: "User",
+                    method: "email",
+                    createdAt: new Date().toISOString()
+                });
+
+                showAlert('Account created successfully!', 'success');
+                setTimeout(() => window.location.href = "index.html", 1500);
+            } catch (error) {
+                console.error('Signup error:', error);
+                
+                let errorMessage = 'Registration failed. Please try again.';
+                
+                switch (error.code) {
+                    case 'auth/email-already-in-use':
+                        errorMessage = 'This email is already registered. Try logging in instead.';
+                        emailGroup.classList.add('has-error');
+                        break;
+                    case 'auth/invalid-email':
+                        errorMessage = 'Invalid email address format.';
+                        emailGroup.classList.add('has-error');
+                        break;
+                    case 'auth/weak-password':
+                        errorMessage = 'Password is too weak. Use at least 6 characters.';
+                        passwordGroup.classList.add('has-error');
+                        break;
+                    case 'auth/network-request-failed':
+                        errorMessage = 'Network error. Please check your connection.';
+                        break;
+                }
+                
+                showAlert(errorMessage);
+            } finally {
+                signupBtn.disabled = false;
+                signupBtn.textContent = 'Create Account';
+            }
+        });
+
+        // Anonymous Registration
+        anonymousBtn.addEventListener('click', async () => {
+            if (!confirm('Create an anonymous account?\n\nYou will receive a unique ID that you must save to access your account later.')) {
+                return;
+            }
+
+            hideAlert();
+            anonymousBtn.disabled = true;
+            anonymousBtn.textContent = 'Generating...';
+
+            try {
+                // Generate 12-digit account number
+                const accountId = Array.from({length: 12}, () => 
+                    Math.floor(Math.random() * 10)
+                ).join('');
+                
+                const cred = await signInAnonymously(auth);
+                await updateProfile(cred.user, { displayName: accountId });
+                await setDoc(doc(db, "users", cred.user.uid), {
+                    username: accountId,
+                    email: "N/A",
+                    role: "User",
+                    method: "anonymous",
+                    createdAt: new Date().toISOString()
+                });
+
+                // Show modal with account ID
+                accountIdDisplay.textContent = accountId;
+                modal.classList.add('show');
+            } catch (error) {
+                console.error('Anonymous signup error:', error);
+                showAlert('Failed to create anonymous account. Please try again.');
+            } finally {
+                anonymousBtn.disabled = false;
+                anonymousBtn.textContent = 'Generate Anonymous ID';
+            }
+        });
+
+        // Continue from modal
+        continueBtn.addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
     </script>
 </body>
 </html>
