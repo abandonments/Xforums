@@ -1,1 +1,30 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introductions | xBOARD</title>
+    <style>
+        :root { --bg: #05070a; --panel: #12161d; --border: #1e2530; --accent: #afe7fa; --text-dim: #6d7c90; }
+        /* ... (styles same as community lounge) ... */
+    </style>
+</head>
+<body>
+    <nav><a href="index.html" class="logo">xBOARD</a></nav>
+    <div class="container">
+        <div class="breadcrumb"><a href="index.html">Forums</a> > <a href="#">General Discussions</a> > Introductions</div>
+        <div class="header">
+            <h1>Introductions</h1>
+            <button class="new-post-btn" id="newPostBtn" disabled>+ New Thread</button>
+        </div>
+        <div class="posts-list" id="postsList"><div class="loading">Loading threads...</div></div>
+    </div>
+    <script type="module">
+        // ... (standard imports) ...
+        const FORUM_ID = 'community-lounge';
+        const FORUM_NAME = 'Community lounge';
+        // ... (standard firebase logic as seen in snippet 8) ...
+    </script>
+</body>
+</html>
