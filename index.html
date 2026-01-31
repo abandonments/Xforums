@@ -3,216 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>xBOARD | Community Forums</title>
+    <title>xBOARD Forums</title>
     <style>
-        :root {
-            --bg-color: #05070a;
-            --panel-color: #12161d;
-            --border-color: #1e2530;
-            --accent-color: #afe7fa;
-            --text-main: #ffffff;
-            --text-dim: #6d7c90;
-            --error-color: #ff4757;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body { 
-            background-color: var(--bg-color); 
-            color: var(--text-main); 
-            font-family: 'Segoe UI', sans-serif;
-            line-height: 1.6;
-        }
-        
-        nav { 
-            background: var(--panel-color); 
-            border-bottom: 2px solid var(--accent-color); 
-            padding: 15px 20px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .logo-section { 
-            display: flex; 
-            align-items: center; 
-            gap: 15px; 
-        }
-        
-        .logo { 
-            font-weight: bold; 
-            font-size: 1.5rem; 
-            color: var(--accent-color); 
-            text-transform: uppercase; 
-            text-decoration: none; 
-            font-family: monospace;
-            transition: opacity 0.2s;
-        }
-        
-        .logo:hover {
-            opacity: 0.8;
-        }
-        
-        .admin-btn { 
-            background: #e74c3c; 
-            color: white; 
-            padding: 6px 12px; 
-            border-radius: 4px; 
-            font-size: 0.75rem; 
-            font-weight: bold; 
-            text-decoration: none;
-            display: none;
-            transition: all 0.2s;
-        }
-        
-        .admin-btn:hover {
-            background: #c0392b;
-            transform: translateY(-1px);
-        }
-        
-        .user-section {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .user-display {
-            font-size: 0.9rem;
-            color: var(--text-dim);
-        }
-        
-        .user-display b {
-            color: var(--accent-color);
-        }
-        
-        .login-btn { 
-            background: transparent; 
-            border: 1px solid var(--accent-color); 
-            color: var(--accent-color); 
-            padding: 8px 16px; 
-            border-radius: 4px; 
-            cursor: pointer; 
-            font-weight: bold;
-            transition: all 0.2s;
-        }
-        
-        .login-btn:hover {
-            background: var(--accent-color);
-            color: var(--bg-color);
-        }
-        
-        .login-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        
-        .container { 
-            max-width: 1100px; 
-            margin: 20px auto; 
-            padding: 0 15px; 
-        }
-        
-        .category-header { 
-            background: #16202e; 
-            border-left: 4px solid var(--accent-color); 
-            color: var(--accent-color); 
-            padding: 12px 15px; 
-            font-weight: bold; 
-            text-transform: uppercase; 
-            font-size: 0.9rem; 
-            margin-top: 30px;
-            margin-bottom: 0;
-        }
-        
-        .category-header:first-child {
-            margin-top: 20px;
-        }
-        
-        .forum-table { 
-            width: 100%; 
-            background: var(--panel-color); 
-            border-collapse: collapse; 
-            border: 1px solid var(--border-color);
-            border-top: none;
-        }
-        
-        .forum-row td { 
-            padding: 20px; 
-            border-bottom: 1px solid var(--border-color);
-            transition: background 0.2s;
-        }
-        
-        .forum-row:hover td {
-            background: rgba(175, 231, 250, 0.05);
-        }
-        
-        .forum-row:last-child td {
-            border-bottom: none;
-        }
-        
-        .forum-title { 
-            color: var(--accent-color); 
-            text-decoration: none; 
-            font-weight: bold;
-            font-size: 1.1rem;
-            display: block;
-            margin-bottom: 5px;
-            transition: color 0.2s;
-        }
-        
-        .forum-title:hover {
-            color: #d4f4ff;
-        }
-        
-        .forum-description {
-            color: var(--text-dim);
-            font-size: 0.9rem;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: var(--text-dim);
-        }
-        
-        .error-message {
-            background: rgba(255, 71, 87, 0.1);
-            border: 1px solid var(--error-color);
-            color: var(--error-color);
-            padding: 15px;
-            border-radius: 4px;
-            margin: 20px 0;
-        }
-        
-        @media (max-width: 768px) {
-            nav {
-                flex-direction: column;
-                gap: 10px;
-                padding: 10px;
-            }
-            
-            .logo {
-                font-size: 1.2rem;
-            }
-            
-            .container {
-                padding: 0 10px;
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #05070a; color: white; font-family: system-ui, sans-serif; }
+        nav { background: #12161d; border-bottom: 2px solid #afe7fa; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .logo-section { display: flex; gap: 15px; align-items: center; }
+        .logo { font-weight: bold; font-size: 1.5rem; color: #afe7fa; text-decoration: none; }
+        .admin-btn { background: #e74c3c; color: white; padding: 8px 16px; border-radius: 4px; font-size: 0.85rem; font-weight: bold; text-decoration: none; display: none; }
+        .user-section { display: flex; gap: 15px; align-items: center; }
+        .user-display { font-size: 0.9rem; color: #6d7c90; }
+        .login-btn { background: transparent; border: 1px solid #afe7fa; color: #afe7fa; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .container { max-width: 1100px; margin: 20px auto; padding: 0 15px; }
+        .category-header { background: #16202e; border-left: 4px solid #afe7fa; color: #afe7fa; padding: 12px 15px; font-weight: bold; text-transform: uppercase; font-size: 0.9rem; margin-top: 30px; }
+        .forum-table { width: 100%; background: #12161d; border-collapse: collapse; border: 1px solid #1e2530; }
+        .forum-row td { padding: 20px; border-bottom: 1px solid #1e2530; }
+        .forum-row:hover td { background: rgba(175, 231, 250, 0.05); }
+        .forum-title { color: #afe7fa; text-decoration: none; font-weight: bold; font-size: 1.1rem; display: block; margin-bottom: 5px; }
+        .forum-description { color: #6d7c90; font-size: 0.9rem; }
     </style>
 </head>
 <body>
     <nav>
         <div class="logo-section">
-            <a href="index.html" class="logo" aria-label="xBOARD Home">x<span>BOARD</span></a>
-            <a href="admin_dashboard.html" id="admin-link" class="admin-btn" aria-label="Admin Dashboard">ADMIN</a>
+            <a href="index.html" class="logo">xBOARD</a>
+            <a href="admin_dashboard.html" id="admin-link" class="admin-btn">ADMIN</a>
         </div>
         <div class="user-section">
             <span id="user-display" class="user-display">Loading...</span>
@@ -221,19 +36,17 @@
     </nav>
 
     <div class="container">
-        <div id="error-container"></div>
-        
         <div class="category-header">General Discussions</div>
         <table class="forum-table">
             <tr class="forum-row">
                 <td>
-                    <a href="#community-lounge" class="forum-title">Community Lounge</a>
+                    <a href="forum-community-lounge.html" class="forum-title">Community Lounge</a>
                     <div class="forum-description">Talk about anything and everything.</div>
                 </td>
             </tr>
             <tr class="forum-row">
                 <td>
-                    <a href="#introductions" class="forum-title">Introductions</a>
+                    <a href="forum-introductions.html" class="forum-title">Introductions</a>
                     <div class="forum-description">New here? Introduce yourself!</div>
                 </td>
             </tr>
@@ -243,14 +56,24 @@
         <table class="forum-table">
             <tr class="forum-row">
                 <td>
-                    <a href="#coding-scripts" class="forum-title">Coding & Scripts</a>
+                    <a href="forum-coding-scripts.html" class="forum-title">Coding & Scripts</a>
                     <div class="forum-description">Share code projects and collaborate.</div>
                 </td>
             </tr>
             <tr class="forum-row">
                 <td>
-                    <a href="#web-development" class="forum-title">Web Development</a>
+                    <a href="forum-web-development.html" class="forum-title">Web Development</a>
                     <div class="forum-description">HTML, CSS, JavaScript, and frameworks.</div>
+                </td>
+            </tr>
+        </table>
+
+        <div class="category-header">Marketplace</div>
+        <table class="forum-table">
+            <tr class="forum-row">
+                <td>
+                    <a href="marketplace.html" class="forum-title">🛒 Marketplace</a>
+                    <div class="forum-description">Buy, sell, and trade items.</div>
                 </td>
             </tr>
         </table>
@@ -261,73 +84,38 @@
         import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
         import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-        const firebaseConfig = {
+        const app = initializeApp({
             apiKey: 'AIzaSyBTZmr8e_Gk9ltVEdVPOhI8Od9bD3tbrdA',
             authDomain: 'rebornforums.firebaseapp.com',
             projectId: 'rebornforums',
             storageBucket: 'rebornforums.firebasestorage.app',
             messagingSenderId: '499435360097',
             appId: '1:499435360097:web:c5c1fc54e4c37e784b7f20',
-        };
+        });
 
-        const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        const userDisplay = document.getElementById('user-display');
-        const authBtn = document.getElementById('auth-btn');
-        const adminLink = document.getElementById('admin-link');
-        const errorContainer = document.getElementById('error-container');
-
-        function showError(message) {
-            errorContainer.innerHTML = `<div class="error-message">${message}</div>`;
-        }
-
         onAuthStateChanged(auth, async (user) => {
-            try {
-                if (user) {
-                    // User is logged in
-                    const displayName = user.displayName || user.email?.split('@')[0] || 'User';
-                    userDisplay.innerHTML = `Logged in as: <b>${displayName}</b>`;
-                    authBtn.textContent = 'Logout';
-                    authBtn.disabled = false;
-                    authBtn.onclick = async () => {
-                        authBtn.disabled = true;
-                        authBtn.textContent = 'Logging out...';
-                        try {
-                            await signOut(auth);
-                            window.location.reload();
-                        } catch (error) {
-                            console.error('Logout error:', error);
-                            showError('Failed to logout. Please try again.');
-                            authBtn.disabled = false;
-                            authBtn.textContent = 'Logout';
-                        }
-                    };
+            if (user) {
+                const name = user.displayName || user.email?.split('@')[0] || 'User';
+                document.getElementById('user-display').textContent = `Logged in as: ${name}`;
+                document.getElementById('auth-btn').textContent = 'Logout';
+                document.getElementById('auth-btn').disabled = false;
+                document.getElementById('auth-btn').onclick = async () => {
+                    await signOut(auth);
+                    window.location.reload();
+                };
 
-                    // Check if user is admin
-                    try {
-                        const userDoc = await getDoc(doc(db, "users", user.uid));
-                        if (userDoc.exists() && userDoc.data().role === "Admin") {
-                            adminLink.style.display = "inline-block";
-                        }
-                    } catch (error) {
-                        console.error('Error checking admin status:', error);
-                    }
-                } else {
-                    // User is not logged in
-                    userDisplay.textContent = 'Welcome, Guest';
-                    authBtn.textContent = 'Login / Sign Up';
-                    authBtn.disabled = false;
-                    authBtn.onclick = () => window.location.href = 'login.html';
-                    adminLink.style.display = "none";
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (userDoc.exists() && userDoc.data().role === "Admin") {
+                    document.getElementById('admin-link').style.display = "inline-block";
                 }
-            } catch (error) {
-                console.error('Auth state error:', error);
-                userDisplay.textContent = 'Error loading user';
-                authBtn.textContent = 'Login';
-                authBtn.disabled = false;
-                showError('Failed to load authentication state. Please refresh the page.');
+            } else {
+                document.getElementById('user-display').textContent = 'Welcome, Guest';
+                document.getElementById('auth-btn').textContent = 'Login / Sign Up';
+                document.getElementById('auth-btn').disabled = false;
+                document.getElementById('auth-btn').onclick = () => window.location.href = 'login.html';
             }
         });
     </script>
