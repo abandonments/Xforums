@@ -1,30 +1,137 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Introductions | xBOARD</title>
+    <title>Community Lounge</title>
     <style>
-        :root { --bg: #05070a; --panel: #12161d; --border: #1e2530; --accent: #afe7fa; --text-dim: #6d7c90; }
-        /* ... (styles same as community lounge) ... */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #05070a; color: white; font-family: system-ui, sans-serif; }
+        nav { background: #12161d; border-bottom: 2px solid #afe7fa; padding: 15px 20px; }
+        .logo { font-weight: bold; font-size: 1.5rem; color: #afe7fa; text-decoration: none; }
+        .container { max-width: 1100px; margin: 20px auto; padding: 0 15px; }
+        .breadcrumb { color: #6d7c90; font-size: 0.9rem; margin-bottom: 20px; }
+        .breadcrumb a { color: #afe7fa; text-decoration: none; }
+        .header { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        h1 { color: #afe7fa; }
+        .new-btn { background: #afe7fa; color: #05070a; border: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .posts { background: #12161d; border: 1px solid #1e2530; border-radius: 8px; }
+        .post { padding: 20px; border-bottom: 1px solid #1e2530; cursor: pointer; }
+        .post:hover { background: rgba(175, 231, 250, 0.05); }
+        .post-title { color: #afe7fa; font-size: 1.2rem; font-weight: bold; margin-bottom: 5px; }
+        .post-meta { color: #6d7c90; font-size: 0.85rem; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); align-items: center; justify-content: center; }
+        .modal.show { display: flex; }
+        .modal-content { background: #12161d; padding: 30px; border-radius: 12px; border: 1px solid #afe7fa; width: 90%; max-width: 600px; }
+        input, textarea { width: 100%; padding: 12px; background: #05070a; border: 1px solid #1e2530; border-radius: 6px; color: white; font-family: inherit; margin: 10px 0; }
+        textarea { min-height: 150px; }
+        .btn { padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-right: 10px; }
+        .btn-primary { background: #afe7fa; color: #05070a; border: none; }
+        .btn-secondary { background: transparent; border: 1px solid #1e2530; color: #6d7c90; }
     </style>
 </head>
 <body>
     <nav><a href="index.html" class="logo">xBOARD</a></nav>
     <div class="container">
-        <div class="breadcrumb"><a href="index.html">Forums</a> > <a href="#">General Discussions</a> > Introductions</div>
+        <div class="breadcrumb"><a href="index.html">Forums</a> > Community Lounge</div>
         <div class="header">
-            <h1>Introductions</h1>
-            <button class="new-post-btn" id="newPostBtn" disabled>+ New Thread</button>
+            <h1>Community Lounge</h1>
+            <button class="new-btn" id="newBtn" disabled>New Thread</button>
         </div>
-        <div class="posts-list" id="postsList"><div class="loading">Loading threads...</div></div>
+        <div class="posts" id="posts">Loading...</div>
     </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2 style="color:#afe7fa">Create Thread</h2>
+            <input type="text" id="title" placeholder="Title" maxlength="200">
+            <textarea id="content" placeholder="Content"></textarea>
+            <button class="btn btn-primary" id="submit">Post</button>
+            <button class="btn btn-secondary" id="cancel">Cancel</button>
+        </div>
+    </div>
+
     <script type="module">
-        // ... (standard imports) ...
-        const FORUM_ID = 'community-lounge';
-        const FORUM_NAME = 'Community lounge';
-        // ... (standard firebase logic as seen in snippet 8) ...
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { getFirestore, collection, addDoc, query, orderBy, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        const app = initializeApp({
+            apiKey: 'AIzaSyBTZmr8e_Gk9ltVEdVPOhI8Od9bD3tbrdA',
+            authDomain: 'rebornforums.firebaseapp.com',
+            projectId: 'rebornforums',
+            storageBucket: 'rebornforums.firebasestorage.app',
+            messagingSenderId: '499435360097',
+            appId: '1:499435360097:web:c5c1fc54e4c37e784b7f20',
+        });
+
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const FORUM = {id: 'community-lounge', name: 'Community Lounge'};
+        let user = null;
+
+        onAuthStateChanged(auth, u => {
+            user = u;
+            document.getElementById('newBtn').disabled = !u;
+        });
+
+        async function load() {
+            const q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
+            const snap = await getDocs(q);
+            const el = document.getElementById('posts');
+            
+            if (snap.empty) {
+                el.innerHTML = '<div style="padding:60px;text-align:center;color:#6d7c90">No threads yet</div>';
+                return;
+            }
+            
+            el.innerHTML = '';
+            snap.forEach(d => {
+                const p = d.data();
+                if (p.forumId !== FORUM.id) return;
+                const div = document.createElement('div');
+                div.className = 'post';
+                div.onclick = () => location.href = `thread.html?id=${d.id}`;
+                div.innerHTML = `
+                    <div class="post-title">${p.title}</div>
+                    <div class="post-meta">By ${p.author} • ${p.replyCount || 0} replies</div>
+                `;
+                el.appendChild(div);
+            });
+        }
+
+        document.getElementById('newBtn').onclick = () => {
+            if (!user) return alert('Please login');
+            document.getElementById('modal').classList.add('show');
+        };
+
+        document.getElementById('cancel').onclick = () => {
+            document.getElementById('modal').classList.remove('show');
+        };
+
+        document.getElementById('submit').onclick = async () => {
+            const title = document.getElementById('title').value.trim();
+            const content = document.getElementById('content').value.trim();
+            if (!title || !content) return alert('Fill all fields');
+
+            await addDoc(collection(db, 'posts'), {
+                forumId: FORUM.id,
+                forumName: FORUM.name,
+                title, content,
+                author: user.displayName || user.email?.split('@')[0] || 'User',
+                authorId: user.uid,
+                createdAt: serverTimestamp(),
+                replyCount: 0,
+                views: 0
+            });
+
+            document.getElementById('modal').classList.remove('show');
+            document.getElementById('title').value = '';
+            document.getElementById('content').value = '';
+            load();
+        };
+
+        load();
     </script>
 </body>
 </html>
